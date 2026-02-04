@@ -1,0 +1,2 @@
+Place your profile image here as: profile.jpg
+The image from the chat should be saved to this location.
