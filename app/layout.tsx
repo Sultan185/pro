@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Sora, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { profile } from '@/lib/data'
+import { asset, profile } from '@/lib/data'
 import SmoothScroll from '@/components/SmoothScroll'
 import Cursor from '@/components/Cursor'
 import Preloader from '@/components/Preloader'
@@ -26,11 +26,11 @@ export const metadata: Metadata = {
     title,
     description,
     siteName: profile.name,
-    images: [{ url: '/projects/azz.webp', width: 1200, height: 750, alt: 'Azz on the Salla App Store' }],
+    images: [{ url: asset('/projects/azz.webp'), width: 1200, height: 750, alt: 'Azz on the Salla App Store' }],
   },
   twitter: { card: 'summary_large_image', title, description },
   robots: { index: true, follow: true },
-  icons: { icon: '/favicon.svg' },
+  icons: { icon: asset('/favicon.svg') },
 }
 
 export const viewport: Viewport = {
