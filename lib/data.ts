@@ -22,7 +22,7 @@ export const profile = {
   github: 'https://github.com/Sultan185',
   linkedin: 'https://linkedin.com/in/mohamed-soltan-36551a21a',
   cv: '/Mohamed_Ashraf_Sultan_CV.pdf',
-  siteUrl: 'https://sultan185.github.io',
+  siteUrl: 'https://mohamed-sultan.mohamedsoltan1852.workers.dev',
   photo: '/profile.jpeg',
   intro:
     'I design and ship multi-tenant SaaS products that hold up under real load: idempotent webhook pipelines, tuned MySQL schemas and payment flows that reconcile to the cent. My work runs in production across 1,000+ live merchant stores.',

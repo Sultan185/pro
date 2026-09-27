@@ -175,7 +175,7 @@ export default function Projects() {
 
   return (
     <section ref={root} id="work" className="relative border-t border-line">
-      <div ref={pin} className="flex flex-col overflow-hidden py-20 lg:h-[100svh] lg:min-h-[680px] lg:py-0 lg:pb-8 lg:pt-24">
+      <div ref={pin} className="flex flex-col overflow-hidden py-20 lg:h-screen lg:min-h-[680px] lg:py-0 lg:pb-8 lg:pt-24">
         <div className="wrap flex shrink-0 items-end justify-between gap-8 pb-8">
           <div>
             <p className="eyebrow mb-4">Selected work</p>

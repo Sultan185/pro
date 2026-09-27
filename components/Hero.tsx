@@ -97,8 +97,8 @@ export default function Hero() {
   )
 
   return (
-    <section ref={root} id="top" className="relative z-0 overflow-hidden lg:sticky lg:top-0 lg:h-[100svh] lg:min-h-[640px]">
-      <div ref={inner} className="relative flex min-h-[100svh] origin-top flex-col justify-center pb-16 pt-24 lg:h-full lg:min-h-0 lg:py-0 lg:will-change-transform">
+    <section ref={root} id="top" className="h-hero relative z-0 overflow-hidden lg:sticky lg:top-0">
+      <div ref={inner} className="min-h-hero relative flex origin-top flex-col justify-center pb-16 pt-24 lg:h-full lg:py-0 lg:will-change-transform">
         <div data-depth="0.4" className="grid-bg pointer-events-none absolute inset-[-40px]" />
         <div data-depth="0.8" className="pointer-events-none absolute inset-x-0 -top-40 flex justify-center">
           <div className="glow-orb h-[520px] w-[820px] opacity-60" />

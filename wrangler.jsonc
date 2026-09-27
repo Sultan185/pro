@@ -4,7 +4,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   // Must match the Worker name shown in the Cloudflare dashboard.
-  "name": "pro",
+  "name": "mohamed-sultan",
   "compatibility_date": "2026-09-01",
   // Runs before upload, so ./out always exists even if the dashboard build command is empty.
   "build": { "command": "npm run build" },

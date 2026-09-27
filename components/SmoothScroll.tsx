@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, type ReactNode } from 'react'
-import Lenis from 'lenis'
+import type Lenis from 'lenis'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { setLenis } from '@/lib/lenis'
 import { introFinished, onIntroDone } from '@/lib/intro'
@@ -14,21 +14,13 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     document.fonts?.ready.then(() => ScrollTrigger.refresh())
     if (reduce || !fine) return
 
-    const lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.4 })
-    setLenis(lenis)
-    lenis.on('scroll', ScrollTrigger.update)
-    const tick = (time: number) => lenis.raf(time * 1000)
-    gsap.ticker.add(tick)
-    gsap.ticker.lagSmoothing(0)
-
-    // Freeze scrolling while the preloader plays.
-    if (!introFinished()) {
-      lenis.stop()
-      onIntroDone(() => lenis.start())
-    }
+    let lenis: Lenis | null = null
+    let cancelled = false
+    const tick = (time: number) => lenis?.raf(time * 1000)
 
     // Anchor links go through Lenis so they animate smoothly.
     const onClick = (e: MouseEvent) => {
+      if (!lenis) return
       const a = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null
       if (!a) return
       const id = a.getAttribute('href')
@@ -38,12 +30,31 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       e.preventDefault()
       lenis.scrollTo(el as HTMLElement, { offset: 0, duration: 1.6, easing: (t) => 1 - Math.pow(1 - t, 4) })
     }
-    document.addEventListener('click', onClick)
+
+    import('lenis')
+      .then(({ default: LenisCtor }) => {
+        if (cancelled) return
+        lenis = new LenisCtor({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.4 })
+        setLenis(lenis)
+        lenis.on('scroll', ScrollTrigger.update)
+        gsap.ticker.add(tick)
+        gsap.ticker.lagSmoothing(0)
+        // Freeze scrolling while the preloader plays.
+        if (!introFinished()) {
+          lenis.stop()
+          onIntroDone(() => lenis?.start())
+        }
+        document.addEventListener('click', onClick)
+      })
+      .catch(() => {
+        /* smooth scrolling is an enhancement; native scrolling keeps working */
+      })
 
     return () => {
+      cancelled = true
       document.removeEventListener('click', onClick)
       gsap.ticker.remove(tick)
-      lenis.destroy()
+      lenis?.destroy()
       setLenis(null)
     }
   }, [])
