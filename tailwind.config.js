@@ -1,46 +1,33 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './lib/**/*.{js,ts}'],
   theme: {
     extend: {
       colors: {
-        primary: "#ff6b00",
-        "primary-dark": "#e65c00",
-        dark: "#1a1a1a",
-        "dark-light": "#2a2a2a",
-        "text-primary": "#f0f0f0",
-        "text-secondary": "#b0b0b0",
-        "blue-glow": "#00bfff",
-        "blue-dark": "#0099e6",
+        bg: '#09090b',
+        surface: '#101012',
+        'surface-2': '#17171a',
+        line: 'rgba(255,255,255,0.08)',
+        'line-strong': 'rgba(255,255,255,0.16)',
+        primary: '#ff6a00',
+        'primary-soft': '#ffb066',
+        fg: '#f5f5f4',
+        muted: '#a3a3a3',
+        dim: '#6b6b70',
       },
       fontFamily: {
-        sans: ["Outfit", "Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "Fira Code", "Inconsolata", "monospace"],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
+      maxWidth: { wrap: '76rem' },
       boxShadow: {
-        "glow-orange":
-          "0 0 10px rgba(255, 107, 0, 0.5), 0 0 20px rgba(255, 107, 0, 0.3)",
-        "glow-blue":
-          "0 0 10px rgba(0, 191, 255, 0.5), 0 0 20px rgba(0, 191, 255, 0.3)",
-        "glow-cyan":
-          "0 0 10px rgba(6, 182, 212, 0.4), 0 0 20px rgba(6, 182, 212, 0.2)",
-        "glow-orange-lg":
-          "0 0 15px rgba(255, 107, 0, 0.6), 0 0 30px rgba(255, 107, 0, 0.4)",
-        "glow-blue-lg":
-          "0 0 15px rgba(0, 191, 255, 0.6), 0 0 30px rgba(0, 191, 255, 0.4)",
+        glow: '0 0 0 1px rgba(255,106,0,0.35), 0 12px 48px -12px rgba(255,106,0,0.45)',
+        card: '0 1px 0 0 rgba(255,255,255,0.06) inset, 0 24px 64px -32px rgba(0,0,0,0.8)',
       },
-      animation: {
-        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-      },
-      borderColor: {
-        "orange-glow": "#ff6b00",
-        "blue-glow": "#00bfff",
-      },
+      letterSpacing: { tightest: '-0.045em' },
+      transitionTimingFunction: { out: 'cubic-bezier(0.22, 1, 0.36, 1)' },
     },
   },
   plugins: [],
-};
+}

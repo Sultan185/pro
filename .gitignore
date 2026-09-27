@@ -8,3 +8,4 @@ build
 .env*.local
 .vercel
 .turbo
+tsconfig.tsbuildinfo
