@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import Image from 'next/image'
-import { useGSAP } from '@gsap/react'
+import { useMotion } from '@/lib/useMotion'
 import { ArrowUpRight, MoveRight } from 'lucide-react'
 import { gsap, ScrollTrigger, SplitText, DESKTOP, MOBILE, FINE } from '@/lib/gsap'
 import { projects, type Project } from '@/lib/data'
@@ -68,7 +68,7 @@ export default function Projects() {
   const bar = useRef<HTMLDivElement>(null)
   const title = useRef<HTMLHeadingElement>(null)
 
-  useGSAP(
+  useMotion(
     () => {
       const mm = gsap.matchMedia()
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { useGSAP } from '@gsap/react'
+import { useMotion } from '@/lib/useMotion'
 import { ArrowUpRight } from 'lucide-react'
 import { gsap, ScrollTrigger, MOTION } from '@/lib/gsap'
 import { experience, education } from '@/lib/data'
@@ -11,7 +11,7 @@ export default function Experience() {
   const root = useRef<HTMLElement>(null)
   const line = useRef<HTMLDivElement>(null)
 
-  useGSAP(
+  useMotion(
     () => {
       gsap.matchMedia().add(MOTION, () => {
         // The rail draws itself with scroll.
@@ -24,12 +24,12 @@ export default function Experience() {
         gsap.utils.toArray<HTMLElement>('[data-job]').forEach((job) => {
           const dot = job.querySelector('[data-dot]')
           const parts = job.querySelectorAll('[data-job-part]')
-          gsap.set(parts, { opacity: 0, x: 40 })
+          gsap.set(parts, { opacity: 0, y: 28 })
           gsap.set(dot, { scale: 0 })
 
           const tl = gsap.timeline({ scrollTrigger: { trigger: job, start: 'top 78%', once: true } })
           tl.to(dot, { scale: 1, duration: 0.6, ease: 'back.out(3)' })
-            .to(parts, { opacity: 1, x: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06 }, 0.05)
+            .to(parts, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06 }, 0.05)
 
           // Highlight whichever role is crossing the reading line.
           ScrollTrigger.create({
@@ -50,7 +50,7 @@ export default function Experience() {
   )
 
   return (
-    <section ref={root} id="experience" className="section border-t border-line">
+    <section ref={root} id="experience" className="section overflow-x-clip border-t border-line">
       <div className="wrap grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading

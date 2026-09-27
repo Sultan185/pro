@@ -2,9 +2,9 @@
 
 import { useRef } from 'react'
 import Image from 'next/image'
-import { useGSAP } from '@gsap/react'
+import { useMotion } from '@/lib/useMotion'
 import { ArrowDown, ArrowUpRight, Download, Github, Linkedin, Mail, MessageCircle } from 'lucide-react'
-import { gsap, ScrollTrigger, SplitText, MOTION, FINE, REDUCED } from '@/lib/gsap'
+import { gsap, ScrollTrigger, SplitText, MOTION, DESKTOP, FINE, REDUCED } from '@/lib/gsap'
 import { onIntroDone } from '@/lib/intro'
 import { profile } from '@/lib/data'
 
@@ -14,7 +14,7 @@ export default function Hero() {
   const headline = useRef<HTMLHeadingElement>(null)
   const frame = useRef<HTMLDivElement>(null)
 
-  useGSAP(
+  useMotion(
     () => {
       const mm = gsap.matchMedia()
 
@@ -36,22 +36,22 @@ export default function Hero() {
 
         const off = onIntroDone(() => intro.play())
 
-        // ---- 2. Idle loops (paused while the hero is covered, so nothing runs off-screen)
-        const idle = [
+        // ---- 2. Idle loops
+        void [
           gsap.to('[data-orbit="1"]', { rotate: 360, duration: 45, ease: 'none', repeat: -1 }),
           gsap.to('[data-orbit="2"]', { rotate: -360, duration: 70, ease: 'none', repeat: -1 }),
           gsap.to('[data-scrollcue]', { y: 8, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: -1 }),
         ]
-        ScrollTrigger.create({
-          start: () => window.innerHeight + 20,
-          end: 'max',
-          onToggle: (self) => {
-            gsap.set(inner.current, { visibility: self.isActive ? 'hidden' : 'visible' })
-            idle.forEach((t) => (self.isActive ? t.pause() : t.play()))
-          },
-        })
 
-        // ---- 3. Scroll-out: the pinned hero recedes while the next section slides over it
+        return () => {
+          off()
+          split.revert()
+        }
+      })
+
+      // ---- 3. Desktop only: the hero is sticky and recedes while the sheet slides over it.
+      //         Phones get a normal, lightweight scroll (no sticky, no blur, no big layers).
+      mm.add(DESKTOP, () => {
         gsap.to(inner.current, {
           scale: 0.9,
           yPercent: -6,
@@ -60,11 +60,11 @@ export default function Hero() {
           ease: 'none',
           scrollTrigger: { start: 0, end: () => window.innerHeight, scrub: true, invalidateOnRefresh: true },
         })
-
-        return () => {
-          off()
-          split.revert()
-        }
+        ScrollTrigger.create({
+          start: () => window.innerHeight + 20,
+          end: 'max',
+          onToggle: (self) => gsap.set(inner.current, { visibility: self.isActive ? 'hidden' : 'visible' }),
+        })
       })
 
       // ---- 4. Pointer parallax across depth layers
@@ -97,22 +97,22 @@ export default function Hero() {
   )
 
   return (
-    <section ref={root} id="top" className="sticky top-0 z-0 h-[100svh] min-h-[640px] overflow-hidden">
-      <div ref={inner} className="relative flex h-full origin-top flex-col justify-center will-change-transform">
+    <section ref={root} id="top" className="relative z-0 overflow-hidden lg:sticky lg:top-0 lg:h-[100svh] lg:min-h-[640px]">
+      <div ref={inner} className="relative flex min-h-[100svh] origin-top flex-col justify-center pb-16 pt-24 lg:h-full lg:min-h-0 lg:py-0 lg:will-change-transform">
         <div data-depth="0.4" className="grid-bg pointer-events-none absolute inset-[-40px]" />
         <div data-depth="0.8" className="pointer-events-none absolute inset-x-0 -top-40 flex justify-center">
           <div className="glow-orb h-[520px] w-[820px] opacity-60" />
         </div>
 
-        <div className="wrap relative grid items-center gap-10 pt-16 lg:grid-cols-[1.3fr_0.85fr]">
-          <div>
+        <div className="wrap relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.3fr_0.85fr] lg:pt-16">
+          <div className="min-w-0">
             <p data-hero-fade className="eyebrow mb-6 translate-y-3">
               {profile.role} · {profile.tagline}
             </p>
 
             <h1
               ref={headline}
-              className="font-display text-[clamp(2.5rem,6.6vw,5.4rem)] font-semibold leading-[1] tracking-tightest [font-kerning:none]"
+              className="font-display text-[clamp(2rem,10.5vw,2.75rem)] font-semibold leading-[1.02] tracking-tightest [font-kerning:none] sm:text-[clamp(2.75rem,6.6vw,5.4rem)] sm:leading-[1]"
             >
               Building SaaS that <span className="text-primary">holds up</span> under real load.
             </h1>

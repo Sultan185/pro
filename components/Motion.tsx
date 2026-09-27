@@ -1,7 +1,8 @@
 'use client'
 
-import { useGSAP } from '@gsap/react'
+import { useMotion } from '@/lib/useMotion'
 import { gsap, ScrollTrigger, SplitText, MOTION, FINE, REDUCED } from '@/lib/gsap'
+import { markMotionReady } from '@/lib/safe'
 
 /**
  * Page-wide motion primitives, declared once:
@@ -10,7 +11,8 @@ import { gsap, ScrollTrigger, SplitText, MOTION, FINE, REDUCED } from '@/lib/gsa
  *  - [data-magnetic] element leans toward the pointer
  */
 export default function Motion() {
-  useGSAP(() => {
+  useMotion(() => {
+    markMotionReady()
     const mm = gsap.matchMedia()
 
     mm.add(MOTION, () => {

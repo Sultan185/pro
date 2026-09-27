@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { useGSAP } from '@gsap/react'
+import { useMotion } from '@/lib/useMotion'
 import { gsap, SplitText, MOTION } from '@/lib/gsap'
 import { stats } from '@/lib/data'
 
@@ -10,7 +10,7 @@ export default function Statement() {
   const root = useRef<HTMLElement>(null)
   const text = useRef<HTMLParagraphElement>(null)
 
-  useGSAP(
+  useMotion(
     () => {
       const mm = gsap.matchMedia()
       mm.add(MOTION, () => {
@@ -70,8 +70,8 @@ export default function Statement() {
           <div data-rule className="h-px w-full bg-line-strong" />
           <dl className="grid grid-cols-2 md:grid-cols-4">
             {stats.map((s) => (
-              <div key={s.label} data-stat className="border-b border-line px-1 py-8 md:border-b-0 md:border-r md:px-8 md:last:border-r-0 md:first:pl-0">
-                <dd className="mb-2 font-display text-5xl font-semibold tracking-tight sm:text-6xl">
+              <div key={s.label} data-stat className="min-w-0 border-b border-line px-1 py-8 md:border-b-0 md:border-r md:px-8 md:last:border-r-0 md:first:pl-0">
+                <dd className="mb-2 font-display text-[clamp(2.1rem,11vw,3rem)] font-semibold tracking-tight sm:text-6xl">
                   <span data-count={s.value}>{s.value.toLocaleString('en-US')}</span>
                   <span className="text-primary">{s.suffix}</span>
                 </dd>

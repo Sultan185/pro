@@ -10,6 +10,13 @@
     scroll-behavior: auto;
     -webkit-tap-highlight-color: transparent;
   }
+  /* Nothing may widen the page: on phones a single overflowing element makes the
+     browser lay the whole site out wider than the screen. */
+  html { overflow-x: hidden; }
+  @supports (overflow: clip) {
+    /* clip does not create a scroll container, so sticky and pinning keep working */
+    html, body { overflow-x: clip; }
+  }
   body {
     @apply bg-bg text-fg font-sans antialiased;
     text-rendering: optimizeLegibility;
@@ -59,7 +66,7 @@
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .noise::after {
-    content: '';
+    content: none;
     position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .035;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
@@ -75,6 +82,27 @@
 @media (prefers-reduced-motion: no-preference) {
   html.js [data-reveal] { opacity: 0; transform: translateY(28px); }
   html.js [data-hero-fade] { opacity: 0; }
+}
+
+/* The film grain is a full-screen filtered layer: desktop only. */
+@media (min-width: 1024px) and (pointer: fine) {
+  .noise::after { content: ''; }
+}
+
+/* Fail open: set when motion code throws or never starts (see lib/safe.ts, layout.tsx). */
+html.no-motion [data-reveal],
+html.no-motion [data-hero-fade],
+html.no-motion [data-panel],
+html.no-motion [data-skill],
+html.no-motion [data-job-part],
+html.no-motion [data-dot],
+html.no-motion h1 *,
+html.no-motion h2 *,
+html.no-motion header {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+  clip-path: none !important;
 }
 
 .lenis.lenis-smooth { scroll-behavior: auto !important; }

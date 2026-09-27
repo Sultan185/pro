@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { useGSAP } from '@gsap/react'
+import { useMotion } from '@/lib/useMotion'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { onIntroDone } from '@/lib/intro'
@@ -19,7 +19,7 @@ export default function Nav() {
   const progress = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
 
-  useGSAP(
+  useMotion(
     () => {
       let ready = false
       gsap.set(bar.current, { yPercent: -100 })

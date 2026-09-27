@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { useGSAP } from '@gsap/react'
+import { useMotion } from '@/lib/useMotion'
 import { gsap, ScrollTrigger, MOTION } from '@/lib/gsap'
 import { marquee } from '@/lib/data'
 
@@ -9,7 +9,7 @@ import { marquee } from '@/lib/data'
 export default function Marquee() {
   const root = useRef<HTMLDivElement>(null)
 
-  useGSAP(
+  useMotion(
     () => {
       gsap.matchMedia().add(MOTION, () => {
         const rows = gsap.utils.toArray<HTMLElement>('[data-row]')

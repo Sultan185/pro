@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { useGSAP } from '@gsap/react'
+import { useMotion } from '@/lib/useMotion'
 import { ArrowUpRight, Github, Linkedin, Mail, MessageCircle, Phone } from 'lucide-react'
 import { gsap, SplitText, MOTION } from '@/lib/gsap'
 import { profile } from '@/lib/data'
@@ -18,7 +18,7 @@ export default function Contact() {
   const root = useRef<HTMLElement>(null)
   const title = useRef<HTMLHeadingElement>(null)
 
-  useGSAP(
+  useMotion(
     () => {
       gsap.matchMedia().add(MOTION, () => {
         // Giant outlined words slide across as the footer scrolls into view.
@@ -69,8 +69,8 @@ export default function Contact() {
             Open to remote full-time roles and contract work across KSA and the GCC. I reply within a day.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
-            <a data-magnetic href={`mailto:${profile.email}`} className="btn-primary !px-8 !py-4 text-base">
-              <Mail size={18} /> {profile.email}
+            <a data-magnetic href={`mailto:${profile.email}`} className="btn-primary max-w-full !px-6 !py-4 text-sm sm:!px-8 sm:text-base">
+              <Mail size={18} className="shrink-0" /> <span className="truncate">{profile.email}</span>
             </a>
             <a data-magnetic href={profile.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-ghost !px-8 !py-4 text-base">
               <MessageCircle size={18} /> WhatsApp

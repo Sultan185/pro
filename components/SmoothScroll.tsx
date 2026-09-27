@@ -9,7 +9,10 @@ import { introFinished, onIntroDone } from '@/lib/intro'
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduce) return
+    // Touch devices scroll natively: it is smoother there and cannot be blocked by us.
+    const fine = window.matchMedia('(pointer: fine)').matches
+    document.fonts?.ready.then(() => ScrollTrigger.refresh())
+    if (reduce || !fine) return
 
     const lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.4 })
     setLenis(lenis)
@@ -23,9 +26,6 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       lenis.stop()
       onIntroDone(() => lenis.start())
     }
-
-    // Layout can shift once web fonts land; make sure pin/scrub maths is right.
-    document.fonts?.ready.then(() => ScrollTrigger.refresh())
 
     // Anchor links go through Lenis so they animate smoothly.
     const onClick = (e: MouseEvent) => {

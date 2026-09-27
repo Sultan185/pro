@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { useGSAP } from '@gsap/react'
+import { useMotion } from '@/lib/useMotion'
 import { gsap, ScrollTrigger, MOTION, FINE } from '@/lib/gsap'
 import { skills } from '@/lib/data'
 import SectionHeading from './SectionHeading'
@@ -9,7 +9,7 @@ import SectionHeading from './SectionHeading'
 export default function Skills() {
   const root = useRef<HTMLElement>(null)
 
-  useGSAP(
+  useMotion(
     () => {
       const mm = gsap.matchMedia()
       mm.add(MOTION, () => {

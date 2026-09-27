@@ -28,11 +28,18 @@ export default function Preloader() {
     const el = root.current
     const letters = el.querySelectorAll<HTMLElement>('[data-letter]')
     const n = { v: 0 }
+    const close = () => {
+      markIntroSeen()
+      finishIntro()
+      setActive(false)
+    }
+    // Whatever happens to the animation, the overlay is gone after 5s.
+    const failsafe = window.setTimeout(close, 5000)
     const tl = gsap.timeline({
       defaults: { ease: 'expo.out' },
       onComplete: () => {
-        markIntroSeen()
-        setActive(false)
+        window.clearTimeout(failsafe)
+        close()
       },
     })
 
@@ -48,7 +55,7 @@ export default function Preloader() {
       .to(el, { yPercent: -100, duration: 1.05, ease: 'expo.inOut' }, '<')
       .to('[data-curtain]', { yPercent: -100, duration: 1.05, ease: 'expo.inOut' }, '<0.06')
 
-    return () => { tl.kill() }
+    return () => { window.clearTimeout(failsafe); tl.kill() }
   }, [active])
 
   if (!active) return null
