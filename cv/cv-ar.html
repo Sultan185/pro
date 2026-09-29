@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>محمد أشرف سلطان – مطور Full-Stack (Laravel، React، سلة)</title>
+<!--
+  Source of public/Mohamed_Ashraf_Sultan_CV_AR.pdf. Edit the text here, then run:  python3 cv/build.py
+  Same design as the English CV, mirrored for right-to-left.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=block">
+<style>
+  @page { size: A4; margin: 10mm 12.5mm 9mm; }
+
+  :root {
+    --ink: #1c1c22;
+    --text: #26262c;
+    --soft: #4b5563;
+    --grey: #6b7280;
+    --line: #d4d7dd;
+    --accent: #d9480f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* Inter draws the Latin words and the digits; the Arabic face fills in everything Inter lacks. */
+  body {
+    font-family: Inter, 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 9.4pt;
+    line-height: 1.56;
+    color: var(--text);
+    /* Optional ligatures and vowel marks are left out on purpose: both come out scrambled when
+       the text is copied or parsed from the PDF (recruiting software reads CVs that way). */
+    font-feature-settings: 'liga' 0, 'dlig' 0, 'clig' 0, 'calt' 0, 'rlig' 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Links, dates and list items keep their own reading order inside Arabic text. */
+  a, time, bdi { unicode-bidi: isolate; }
+  a { color: inherit; text-decoration: none; }
+  b { font-weight: 600; color: var(--ink); }
+
+  /* ---- Header */
+  h1 { font-size: 24pt; font-weight: 700; line-height: 1.25; color: var(--ink); }
+  .role { font-size: 11.5pt; font-weight: 600; color: var(--accent); }
+  .contact { display: flex; flex-wrap: wrap; gap: 0 16pt; margin-top: 3pt; font-size: 9pt; color: var(--grey); }
+  .contact .strong { color: var(--ink); }
+  header { padding-bottom: 7pt; border-bottom: 1.2pt solid var(--ink); }
+
+  /* ---- Sections */
+  h2 {
+    display: flex; align-items: center; gap: 9pt;
+    margin: 8pt 0 3.5pt;
+    font-size: 10pt; font-weight: 700; color: var(--ink);
+    break-after: avoid;
+  }
+  h2::after { content: ''; flex: 1; height: 1pt; background: var(--line); }
+
+  /* ---- Skills */
+  .skills { display: grid; grid-template-columns: 43mm 1fr; gap: 2pt 0; }
+  .skills dt { font-size: 9pt; font-weight: 700; color: var(--grey); }
+
+  /* ---- Experience and projects */
+  .entry { margin-top: 5pt; break-inside: avoid; }
+  .entry:first-of-type { margin-top: 0; }
+  .entry-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12pt; }
+  h3 { font-size: 10.6pt; font-weight: 700; line-height: 1.45; color: var(--ink); }
+  h3 span { font-weight: 500; color: var(--soft); }
+  .when { flex-shrink: 0; font-size: 9pt; color: var(--soft); white-space: nowrap; }
+  .meta { font-size: 8.8pt; color: var(--grey); }
+  .meta .accent { font-weight: 600; color: var(--accent); }
+
+  ul { margin-top: 1.5pt; list-style: none; }
+  li { position: relative; padding-inline-start: 13pt; margin-top: 0.5pt; }
+  li::before {
+    content: ''; position: absolute; inset-inline-start: 1pt; top: 0.62em;
+    width: 3.4pt; height: 3.4pt; border-radius: 50%; background: var(--accent);
+  }
+
+  .brief { margin-top: 4pt; break-inside: avoid; }
+  .brief a { font-family: 'JetBrains Mono', monospace; font-size: 8.8pt; }
+
+  /* ---- Education and languages */
+  .columns { display: grid; grid-template-columns: 1.7fr 1fr; gap: 0 24pt; break-inside: avoid; }
+  .columns h2 { margin-top: 8pt; }
+  .school { margin-top: 3.5pt; }
+  .school:first-of-type { margin-top: 0; }
+  .school p:first-child { font-weight: 700; color: var(--ink); }
+  .school p:first-child span { font-size: 9pt; font-weight: 400; color: var(--grey); }
+  .school p + p { font-size: 9pt; color: var(--soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>محمد أشرف سلطان</h1>
+  <p class="role"><bdi dir="rtl">مطور Full-Stack</bdi> · <bdi dir="rtl">Laravel و React ومنظومة سلة</bdi></p>
+  <p class="contact">
+    <span>المنوفية، مصر · متاح للعمل عن بعد (السعودية ودول الخليج)</span>
+    <a class="strong" dir="ltr" href="tel:+201099793552">+20 10 9979 3552</a>
+    <a class="strong" dir="ltr" href="mailto:mohamedsoltan1852@gmail.com">mohamedsoltan1852@gmail.com</a>
+    <a dir="ltr" href="https://github.com/Sultan185">github.com/Sultan185</a>
+    <a dir="ltr" href="https://linkedin.com/in/mohamed-soltan-36551a21a">linkedin.com/in/mohamed-soltan-36551a21a</a>
+  </p>
+</header>
+
+<section>
+  <h2>نبذة مهنية</h2>
+  <p>
+    مطور Full-Stack بخبرة تتجاوز <b>3 سنوات</b> في بناء منتجات SaaS متعددة المستأجرين باستخدام Laravel/PHP مع واجهات
+    JavaScript حديثة (React و Inertia.js و Vue.js). مؤسس <b>Azz</b>، وهو تطبيق لزيادة المبيعات على
+    <b>متجر تطبيقات سلة</b> يعمل في <b>أكثر من 1,000 متجر نشط</b>، وبنيت منصات تعمل فعليا في مجالات التعليم والرعاية
+    الصحية وأنظمة ERP وأرشفة المستندات. أصمم أنظمة تصمد تحت الضغط: مسارات Webhook لا تتكرر أحداثها، ومخططات MySQL
+    مضبوطة الأداء (واجهات API أسرع بنسبة <b>35%</b> وزمن استعلامات أقل بنسبة <b>40%</b>)، وتكاملات دفع مع ماي فاتورة
+    وتابي وتمارا.
+  </p>
+</section>
+
+<section>
+  <h2>المهارات التقنية</h2>
+  <!-- Items are separated by the Arabic comma; the script at the end of the file keeps them in order. -->
+  <dl class="skills">
+    <dt>الأنظمة الخلفية</dt>
+    <dd class="list">PHP، Laravel، Livewire، Filament، تصميم RESTful API، المعمارية المبنية على الأحداث، الطوابير والمهام الخلفية، CodeIgniter</dd>
+
+    <dt>الواجهات الأمامية</dt>
+    <dd class="list">React، Inertia.js، Vue.js، TypeScript، JavaScript (ES6+)، Tailwind CSS، GSAP، إدارة الحالة</dd>
+
+    <dt>سلة وزد والتجارة الإلكترونية</dt>
+    <dd class="list">تطوير تطبيقات متجر تطبيقات سلة، واجهات سلة البرمجية (REST APIs)، محرك قوالب Twilight، الربط مع زد، مزامنة Webhooks، حقن السكربتات، أدوات زيادة المبيعات</dd>
+
+    <dt>المعمارية والبيانات</dt>
+    <dd class="list">معمارية متعددة المستأجرين (قاعدة بيانات واحدة أو قاعدة لكل مستأجر)، تحسين أداء MySQL، الفهرسة وضبط الاستعلامات، التخزين المؤقت بـ Redis، مسارات معالجة Idempotent</dd>
+
+    <dt>المدفوعات</dt>
+    <dd class="list">ماي فاتورة (MyFatoorah)، تابي (Tabby)، تمارا (Tamara)، الدفع بالتقسيط والفوترة غير المتزامنة، الفوترة الإلكترونية ZATCA</dd>
+
+    <dt>السحابة والأدوات</dt>
+    <dd class="list">AWS (EC2, S3)، Linux، Docker، Git/GitHub، مسارات CI</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>الخبرة المهنية</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>مؤسس ومهندس Full-Stack <span>— منتجات SaaS مستقلة</span></h3>
+      <time class="when">03/2026 – الآن</time>
+    </div>
+    <p class="meta">عن بعد · السوق السعودي</p>
+    <ul>
+      <li>أتولى المنتج والأنظمة الخلفية والواجهات والبنية التحتية لكل من Azz و Ansheta و MediFlow Clinics و Filein: أربع منصات SaaS تعمل فعليا وتخدم التجار والمعلمين والعيادات.</li>
+      <li>أطلقت Azz على متجر تطبيقات سلة ووسعت انتشاره إلى <b>أكثر من 1,000 متجر نشط</b> دون التأثير على أداء واجهات المتاجر.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>مطور Full-Stack <span>— المنصة الرقمية لتقنية المعلومات</span></h3>
+      <time class="when">01/2025 – 02/2026</time>
+    </div>
+    <p class="meta">عقد، عن بعد · السعودية</p>
+    <ul>
+      <li>حسنت وحدات خلفية أساسية عالية الاستخدام، فتحسن زمن استجابة الـ API بنسبة <b>35%</b> على منصات بحجم المؤسسات.</li>
+      <li>سلمت حلول SaaS آمنة ومعربة على طبقات API مخصصة ومبنية للسوق التجاري السعودي.</li>
+      <li>أعدت هيكلة فهارس قواعد البيانات عبر عدة بيئات حية للتجار، فانخفض زمن تنفيذ الاستعلامات بنسبة <b>40%</b>.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>مطور Full-Stack <span>— <bdi>Hash Studio Inc.</bdi></span></h3>
+      <time class="when">09/2024 – 01/2026</time>
+    </div>
+    <p class="meta">دوام كامل، من المقر · مصر · <span class="accent">بعد ترقية من متدرب تطوير <bdi>Backend</bdi> (<time>09/2023 – 01/2024</time>)</span></p>
+    <ul>
+      <li>توليت تسليم منتجات SaaS تجارية إقليمية بدورة حياتها الكاملة، من بيئات التجربة المحلية إلى بيئات الإنتاج السحابية.</li>
+      <li>بنيت لوحات إدارية متكاملة باستخدام <b>Filament</b> و <b>Livewire</b>، فانخفض عبء الإعدادات الداخلية بنسبة <b>30%</b>.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>مطور Backend <span>— <bdi>ACWAD</bdi></span></h3>
+      <time class="when">09/2024 – 01/2025</time>
+    </div>
+    <p class="meta">عقد، عن بعد · تركيا</p>
+    <ul>
+      <li>صممت واجهات REST API سريعة الاستجابة وعابرة للحدود تعالج <b>أكثر من 50,000</b> طلب شهريا وفق متطلبات تشفير صارمة.</li>
+      <li>نسقت مسارات إدارة الإصدارات وعمليات البناء الموزعة بين فرق هندسية Agile متعددة التخصصات.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>متدرب تطوير Backend <span>— <bdi>Pure Soft</bdi></span></h3>
+      <time class="when">04/2023 – 08/2023</time>
+    </div>
+    <p class="meta">مصر</p>
+    <ul>
+      <li>أعدت هيكلة مخططات قواعد بيانات علائقية قديمة وعالجت اختناقات الأداء على مستوى الكود، وبنيت أساس Laravel الذي قام عليه كل ما تلاه.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>مشاريع مختارة</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3><bdi>Azz</bdi> <span>— متجر تطبيقات سلة · منصة SaaS لزيادة المبيعات</span></h3>
+      <p class="when"><a dir="ltr" href="https://useazz.com/">useazz.com</a> · <time>03/2026 – 04/2026</time></p>
+    </div>
+    <!-- Tags are separated by the middle dot; the script at the end of the file keeps them in order. -->
+    <p class="meta"><span class="accent tags">Laravel · Inertia · React · Salla APIs · AWS S3</span> · تطبيق متعدد المستأجرين لتجار سلة</p>
+    <ul>
+      <li>أطلقت تطبيق سلة متعدد المستأجرين بجودة إنتاجية، يجمع تقييمات صوتية ومصورة وبالفيديو بعد استلام الطلب ويحولها إلى إثبات اجتماعي في واجهة المتجر.</li>
+      <li>ضبطت حقن السكربتات لعرض عناصر لحظية وإشعارات مبيعات حية في <b>أكثر من 1,000 متجر نشط</b> دون أي إزاحة في تخطيط الصفحة.</li>
+      <li>بنيت مسار معالجة غير متزامن للوسائط على AWS S3 مع Webhooks مؤمنة وقواعد Idempotency صارمة تمنع تكرار الأحداث.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3><bdi>Ansheta</bdi> <span>— منصة أنشطة صفية تفاعلية</span></h3>
+      <p class="when"><a dir="ltr" href="https://anshetaapp.com/">anshetaapp.com</a> · <time>2026</time></p>
+    </div>
+    <p class="meta"><span class="accent tags">Laravel · Inertia · React · Zid · Tailwind CSS</span> · منصة SaaS تعليمية، بالعربية أولا مع الإنجليزية</p>
+    <ul>
+      <li>بنيت مساحة عمل للمعلم لتصميم أنشطة على مراحل مع أسئلتها (إدخال يدوي أو استيراد من JSON)، ثم نشرها وإدارة مسابقات الفرق وغرف الهروب وتحديات الحروف.</li>
+      <li>نفذت جلسات لعب مباشرة مع احتساب فوري للنقاط ولوحات ترتيب للفرق، وينضم الطلاب عبر رابط أو رمز QR دون الحاجة إلى حساب.</li>
+      <li>لوحة تحكم للمعلم مع مؤشر لجاهزية المحتوى وتحليلات تشمل الأنشطة والأسئلة والفرق والجلسات، والاشتراكات عبر متجر زد.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3><bdi>MediFlow Clinics</bdi> <span>— نظام حجز وإدارة العيادات</span></h3>
+      <p class="when"><a dir="ltr" href="https://clinic.namowsecure.com/">clinic.namowsecure.com</a> · <time>2026</time></p>
+    </div>
+    <p class="meta"><span class="accent tags">Laravel 12 · Inertia · React · MySQL · WhatsApp API</span> · رعاية صحية، ثنائي اللغة مع وضع داكن</p>
+    <ul>
+      <li>حجز إلكتروني متاح للجميع: يبحث المرضى عن الأطباء حسب التخصص ويختارون موعدا من محرك لحظي لتوفر المواعيد ويصلهم التأكيد عبر واتساب.</li>
+      <li>لوحة إدارة للعيادة تشمل المرضى والمواعيد والوصفات الإلكترونية والفواتير، مع بوابة للمريض تعرض سجل الزيارات.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3><bdi>Filein</bdi> <span>— منصة أرشفة إلكترونية</span></h3>
+      <p class="when"><a dir="ltr" href="https://filein.cloud/">filein.cloud</a> · <time>09/2025 – 05/2026</time></p>
+    </div>
+    <p class="meta"><span class="accent tags">Laravel · AWS S3 · OCR · Multi-tenant · ACL</span> · منصة SaaS لإدارة المستندات في السوق السعودي</p>
+    <ul>
+      <li>صممت معمارية منصة آمنة ومتعددة المستأجرين للملفات والمستندات، بقوائم تحكم صارمة بالوصول وتخزين مشفر وسجل تدقيق كامل لكل عملية.</li>
+      <li>نفذت بحثا بتقنية OCR داخل المستندات الممسوحة ضوئيا، وهياكل مجلدات وحقول بيانات وصفية مخصصة، وتوقيعات وأختاما رقمية، وباركود لكل معاملة.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3><bdi>Gdawel</bdi> <span>— نظام ERP سحابي وفوترة إلكترونية ZATCA</span></h3>
+      <p class="when"><a dir="ltr" href="https://gdawel.app/">gdawel.app</a></p>
+    </div>
+    <p class="meta"><span class="accent tags">Laravel · Vue · MySQL · MyFatoorah / Tabby / Tamara</span></p>
+    <ul>
+      <li>نظام ERP متعدد المستأجرين يصدر فواتير إلكترونية متوافقة مع ZATCA (المرحلتان الأولى والثانية)، مع عزل كامل لبيانات كل منشأة ومسارات دفع بالتقسيط عبر ماي فاتورة وتابي وتمارا لفوترة دقيقة.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3><bdi>Basma</bdi> <span>— نظام موارد بشرية بقاعدة بيانات لكل مستأجر</span></h3>
+      <p class="when">موارد بشرية للمؤسسات</p>
+    </div>
+    <p class="meta"><span class="accent tags">Laravel · Multi-database tenancy · REST API</span></p>
+    <ul>
+      <li>قاعدة بيانات مستقلة لكل حساب مؤسسي لضمان الأداء والعزل، وطبقة REST API تعتمد عليها تطبيقات iOS و Android.</li>
+    </ul>
+  </div>
+
+  <p class="brief"><b><bdi>Nabil.im</bdi></b> — مدونة شخصية مع لوحة تحكم مخصصة مبنية بـ Filament و Livewire: مسار مسودة ثم نشر، وتحسين للوسائط، وتحكم بالوصول حسب الأدوار، وصفحات تولد على الخادم ومدعومة بالتخزين المؤقت مع Open Graph وخريطة الموقع و RSS. <a dir="ltr" href="https://nabil.im/">nabil.im</a></p>
+  <p class="brief"><b><bdi>Parfum</bdi></b> — متجر إلكتروني للعطور الفاخرة؛ صفحة دفع واحدة مبنية بـ Inertia.js و React و Laravel، مع أدوات تابي وتمارا المضمنة للدفع بالتقسيط. <a dir="ltr" href="https://parfum.sa/">parfum.sa</a></p>
+  <p class="brief"><b><bdi>2ME Sport</bdi></b> — منصة تجارة إلكترونية رياضية مصممة للجوال أولا، مبنية على Laravel مع واجهة JavaScript حديثة. <a dir="ltr" href="https://2me.com.eg/">2me.com.eg</a></p>
+</section>
+
+<div class="columns">
+  <section>
+    <h2>التعليم والتدريب</h2>
+    <div class="school">
+      <p>بكالوريوس علوم الحاسب — جامعة المنوفية <span>· <time>2020 – 2024</time></span></p>
+      <p>كلية الحاسبات والمعلومات · التقدير التراكمي: جيد جدا</p>
+    </div>
+    <div class="school">
+      <p>معسكر تطوير الويب المتقدم (<bdi>PHP / Laravel</bdi>) — <bdi>ITI</bdi> <span>· مكتمل</span></p>
+      <p>معهد تكنولوجيا المعلومات</p>
+    </div>
+  </section>
+  <section>
+    <h2>اللغات</h2>
+    <p><b>العربية</b> — اللغة الأم · <b>الإنجليزية</b> — إجادة مهنية</p>
+  </section>
+</div>
+
+<script>
+  // In right-to-left text, neighbouring Latin words would swap places ("PHP، Laravel" shows Laravel first).
+  // Wrapping every item in <bdi> keeps the written order.
+  function keepOrder(selector, separator, joiner) {
+    document.querySelectorAll(selector).forEach(function (el) {
+      el.innerHTML = el.textContent.split(separator).map(function (item) {
+        return '<bdi>' + item.trim() + '</bdi>'
+      }).join(joiner)
+    })
+  }
+  keepOrder('.list', '،', '، ')
+  keepOrder('.tags', '·', ' · ')
+</script>
+</body>
+</html>

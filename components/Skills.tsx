@@ -4,9 +4,13 @@ import { useRef } from 'react'
 import { useMotion } from '@/lib/useMotion'
 import { gsap, ScrollTrigger, MOTION, FINE } from '@/lib/gsap'
 import { skills } from '@/lib/data'
+import { useLocale } from '@/lib/i18n'
+import { ui } from '@/lib/ui'
+import Accent from './Accent'
 import SectionHeading from './SectionHeading'
 
 export default function Skills() {
+  const { t } = useLocale()
   const root = useRef<HTMLElement>(null)
 
   useMotion(
@@ -62,24 +66,24 @@ export default function Skills() {
     <section ref={root} id="skills" className="section border-t border-line">
       <div className="wrap">
         <SectionHeading
-          eyebrow="Capabilities"
-          title={<>Full stack, with a bias toward <span className="text-primary">the hard parts.</span></>}
-          blurb="Tenancy, payments, webhooks and query performance are where projects fail. Those are the pieces I own first."
+          eyebrow={t(ui.skills.eyebrow)}
+          title={<Accent parts={t(ui.skills.title)} />}
+          blurb={t(ui.skills.blurb)}
         />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((g) => {
             const Icon = g.icon
             return (
-              <div key={g.title} data-skill className="card group overflow-hidden p-6 will-change-transform">
+              <div key={g.title.en} data-skill className="card group overflow-hidden p-6 will-change-transform">
                 <div data-glow className="pointer-events-none absolute left-0 top-0 h-64 w-64 rounded-full bg-primary/20 opacity-0 blur-3xl" />
                 <div className="relative mb-5 flex items-center gap-3">
                   <span className="grid h-10 w-10 place-items-center rounded-xl border border-line bg-surface-2 text-primary transition-colors duration-500 group-hover:bg-primary group-hover:text-black">
                     <Icon size={18} />
                   </span>
-                  <h3 className="font-display text-lg font-semibold tracking-tight">{g.title}</h3>
+                  <h3 className="font-display text-lg font-semibold tracking-tight">{t(g.title)}</h3>
                 </div>
                 <ul className="relative flex flex-wrap gap-2">
-                  {g.items.map((s) => (
+                  {t(g.items).map((s) => (
                     <li key={s} data-chip className="rounded-md border border-line px-2.5 py-1 text-[13px] text-muted transition-colors group-hover:border-line-strong">
                       {s}
                     </li>

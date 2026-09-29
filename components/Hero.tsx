@@ -7,8 +7,12 @@ import { ArrowDown, ArrowUpRight, Download, Github, Linkedin, Mail, MessageCircl
 import { gsap, ScrollTrigger, SplitText, MOTION, DESKTOP, FINE, REDUCED } from '@/lib/gsap'
 import { onIntroDone } from '@/lib/intro'
 import { profile } from '@/lib/data'
+import { useLocale } from '@/lib/i18n'
+import { ui } from '@/lib/ui'
+import Accent from './Accent'
 
 export default function Hero() {
+  const { rtl, t } = useLocale()
   const root = useRef<HTMLElement>(null)
   const inner = useRef<HTMLDivElement>(null)
   const headline = useRef<HTMLHeadingElement>(null)
@@ -20,14 +24,16 @@ export default function Hero() {
 
       mm.add(MOTION, () => {
         // ---- 1. Intro timeline (built paused, played when the preloader hands over)
-        const split = SplitText.create(headline.current, { type: 'lines,words,chars', mask: 'lines' })
+        // Arabic letters join up, so that headline moves word by word, never letter by letter.
+        const split = SplitText.create(headline.current, { type: rtl ? 'lines,words' : 'lines,words,chars', mask: 'lines' })
+        const pieces = rtl ? split.words : split.chars
         gsap.set(frame.current, { clipPath: 'inset(100% 0% 0% 0% round 32px)' })
         gsap.set('[data-portrait]', { scale: 1.35 })
         gsap.set('[data-orbit]', { scale: 0.7, opacity: 0 })
 
         const intro = gsap.timeline({ paused: true, defaults: { ease: 'expo.out' } })
         intro
-          .from(split.chars, { yPercent: 115, rotate: 8, duration: 1.25, stagger: { each: 0.018, from: 'start' } }, 0)
+          .from(pieces, { yPercent: 115, rotate: rtl ? -4 : 8, duration: 1.25, stagger: { each: rtl ? 0.07 : 0.018, from: 'start' } }, 0)
           .to(frame.current, { clipPath: 'inset(0% 0% 0% 0% round 32px)', duration: 1.5, ease: 'expo.inOut' }, 0.1)
           .to('[data-portrait]', { scale: 1, duration: 1.9, ease: 'expo.out' }, 0.25)
           .to('[data-hero-fade]', { opacity: 1, y: 0, duration: 1, stagger: 0.09 }, 0.55)
@@ -107,33 +113,33 @@ export default function Hero() {
         <div className="wrap relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.3fr_0.85fr] lg:pt-16">
           <div className="min-w-0">
             <p data-hero-fade className="eyebrow mb-6 translate-y-3">
-              {profile.role} · {profile.tagline}
+              {t(profile.role)} {t(ui.sep)} {t(profile.tagline)}
             </p>
 
             <h1
               ref={headline}
               className="font-display text-[clamp(2rem,10.5vw,2.75rem)] font-semibold leading-[1.02] tracking-tightest [font-kerning:none] sm:text-[clamp(2.75rem,6.6vw,5.4rem)] sm:leading-[1]"
             >
-              Building SaaS that <span className="text-primary">holds up</span> under real load.
+              <Accent parts={t(ui.hero.headline)} />
             </h1>
 
             <p data-hero-fade className="mt-7 max-w-xl translate-y-3 text-base leading-relaxed text-muted sm:text-lg">
-              {profile.intro}
+              {t(profile.intro)}
             </p>
 
             <div data-hero-fade className="mt-9 flex translate-y-3 flex-wrap items-center gap-3">
               <a href="#work" className="btn-primary" data-magnetic>
-                See the work <ArrowDown size={16} />
+                {t(ui.hero.seeWork)} <ArrowDown size={16} />
               </a>
-              <a href={profile.cv} target="_blank" rel="noopener noreferrer" className="btn-ghost" data-magnetic>
-                <Download size={16} /> Download CV
+              <a href={t(profile.cv)} target="_blank" rel="noopener noreferrer" className="btn-ghost" data-magnetic>
+                <Download size={16} /> {t(ui.hero.downloadCv)}
               </a>
-              <div className="ml-1 flex items-center gap-1">
+              <div className="ml-1 flex items-center gap-1 ar:ml-0 ar:mr-1">
                 {[
                   { href: profile.github, Icon: Github, label: 'GitHub' },
                   { href: profile.linkedin, Icon: Linkedin, label: 'LinkedIn' },
                   { href: profile.whatsapp, Icon: MessageCircle, label: 'WhatsApp' },
-                  { href: `mailto:${profile.email}`, Icon: Mail, label: 'Email' },
+                  { href: `mailto:${profile.email}`, Icon: Mail, label: t(ui.hero.email) },
                 ].map(({ href, Icon, label }) => (
                   <a
                     key={label}
@@ -154,7 +160,7 @@ export default function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
               </span>
-              {profile.availability} · based in {profile.location}
+              {t(profile.availability)} · {t(ui.hero.basedIn)} {t(profile.location)}
             </div>
           </div>
 
@@ -168,7 +174,7 @@ export default function Hero() {
               <Image
                 data-portrait
                 src={profile.photo}
-                alt={profile.name}
+                alt={t(profile.name)}
                 fill
                 priority
                 sizes="(min-width: 1024px) 36vw, 80vw"
@@ -177,7 +183,7 @@ export default function Hero() {
               <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-transparent to-transparent" />
               <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
                 <div>
-                  <p className="font-display text-lg font-semibold">{profile.name}</p>
+                  <p className="font-display text-lg font-semibold">{t(profile.name)}</p>
                   <p className="font-mono text-[11px] uppercase tracking-widest text-primary-soft">Laravel · React · Salla</p>
                 </div>
                 <a
@@ -186,9 +192,9 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="grid h-11 w-11 place-items-center rounded-full bg-fg text-bg"
-                  aria-label="LinkedIn profile"
+                  aria-label={t(ui.hero.linkedinProfile)}
                 >
-                  <ArrowUpRight size={18} />
+                  <ArrowUpRight size={18} className="ar:-scale-x-100" />
                 </a>
               </div>
             </div>
@@ -196,8 +202,8 @@ export default function Hero() {
         </div>
 
         <div className="pointer-events-none absolute inset-x-0 bottom-7 hidden justify-center sm:flex">
-          <a href="#about" data-hero-fade className="pointer-events-auto flex flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-dim">
-            Scroll
+          <a href="#about" data-hero-fade className="pointer-events-auto flex flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-dim ar:text-xs">
+            {t(ui.hero.scroll)}
             <span data-scrollcue className="h-8 w-px bg-gradient-to-b from-primary to-transparent" />
           </a>
         </div>

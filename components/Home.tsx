@@ -8,6 +8,7 @@ import Skills from '@/components/Skills'
 import Contact from '@/components/Contact'
 import Motion from '@/components/Motion'
 
+/** The one page of the site. Its language comes from the layout it is rendered in. */
 export default function Home() {
   return (
     <main className="relative">

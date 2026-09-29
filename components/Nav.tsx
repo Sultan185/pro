@@ -2,22 +2,30 @@
 
 import { useRef, useState } from 'react'
 import { useMotion } from '@/lib/useMotion'
-import { ArrowUpRight, Menu, X } from 'lucide-react'
+import { ArrowUpRight, Languages, Menu, X } from 'lucide-react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { onIntroDone } from '@/lib/intro'
-import { profile } from '@/lib/data'
+import { asset, profile } from '@/lib/data'
+import { useLocale } from '@/lib/i18n'
+import { pathOf } from '@/lib/locale'
+import { ui } from '@/lib/ui'
 
 const links = [
-  { href: '#work', label: 'Work' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#work', label: ui.nav.work },
+  { href: '#experience', label: ui.nav.experience },
+  { href: '#skills', label: ui.nav.skills },
+  { href: '#contact', label: ui.nav.contact },
 ]
 
 export default function Nav() {
   const bar = useRef<HTMLElement>(null)
   const progress = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
+  const { locale, t } = useLocale()
+
+  // A plain link: the other language is a separate page with its own <html lang dir>.
+  const other = locale === 'en' ? 'ar' : 'en'
+  const switchLang = { href: asset(pathOf(other)), lang: other, hrefLang: other }
 
   useMotion(
     () => {
@@ -65,29 +73,37 @@ export default function Nav() {
         <div className="wrap flex h-16 items-center justify-between">
           <a href="#top" className="flex items-center gap-2 font-display text-sm font-semibold tracking-tight">
             <span className="grid h-7 w-7 place-items-center rounded-md bg-primary font-mono text-xs text-black">MS</span>
-            <span className="hidden sm:inline">{profile.name}</span>
+            <span className="hidden sm:inline">{t(profile.name)}</span>
           </a>
 
           <nav className="hidden items-center gap-8 md:flex">
             {links.map((l) => (
               <a key={l.href} href={l.href} data-nav-item className="nav-link">
-                {l.label}
+                {t(l.label)}
               </a>
             ))}
-            <a href={profile.cv} target="_blank" rel="noopener noreferrer" data-magnetic className="btn-ghost !px-4 !py-2 text-xs">
-              Résumé <ArrowUpRight size={14} />
+            <a {...switchLang} data-nav-item className="nav-link inline-flex items-center gap-1.5">
+              <Languages size={15} /> {t(ui.nav.switchTo)}
+            </a>
+            <a href={t(profile.cv)} target="_blank" rel="noopener noreferrer" data-magnetic className="btn-ghost !px-4 !py-2 text-xs">
+              {t(ui.nav.resume)} <ArrowUpRight size={14} className="ar:-scale-x-100" />
             </a>
           </nav>
 
-          <button
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-full border border-line md:hidden"
-          >
-            {open ? <X size={18} /> : <Menu size={18} />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <a {...switchLang} className="flex h-10 items-center gap-1.5 rounded-full border border-line px-3.5 text-sm">
+              <Languages size={15} /> {t(ui.nav.switchTo)}
+            </a>
+            <button
+              aria-label={t(open ? ui.nav.closeMenu : ui.nav.openMenu)}
+              onClick={() => setOpen((v) => !v)}
+              className="grid h-10 w-10 place-items-center rounded-full border border-line"
+            >
+              {open ? <X size={18} /> : <Menu size={18} />}
+            </button>
+          </div>
         </div>
-        <div ref={progress} className="h-px origin-left scale-x-0 bg-gradient-to-r from-primary to-primary-soft" />
+        <div ref={progress} className="h-px origin-left scale-x-0 bg-gradient-to-r from-primary to-primary-soft ar:origin-right ar:bg-gradient-to-l" />
       </div>
 
       {open && (
@@ -95,11 +111,11 @@ export default function Nav() {
           <div className="wrap flex flex-col py-4">
             {links.map((l) => (
               <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="py-3 font-display text-2xl font-medium">
-                {l.label}
+                {t(l.label)}
               </a>
             ))}
-            <a href={profile.cv} target="_blank" rel="noopener noreferrer" className="btn-primary mt-4 w-full">
-              Download résumé
+            <a href={t(profile.cv)} target="_blank" rel="noopener noreferrer" className="btn-primary mt-4 w-full">
+              {t(ui.nav.downloadResume)}
             </a>
           </div>
         </div>

@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './lib/**/*.{js,ts}'],
@@ -16,9 +18,10 @@ module.exports = {
         dim: '#6b6b70',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+        // --font-arabic only exists on the Arabic page, where it supplies the glyphs the Latin faces lack.
+        display: ['var(--font-display)', 'var(--font-arabic, system-ui)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'var(--font-arabic, system-ui)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'var(--font-arabic, ui-monospace)', 'ui-monospace', 'monospace'],
       },
       maxWidth: { wrap: '76rem' },
       boxShadow: {
@@ -29,5 +32,9 @@ module.exports = {
       transitionTimingFunction: { out: 'cubic-bezier(0.22, 1, 0.36, 1)' },
     },
   },
-  plugins: [],
+  plugins: [
+    // ar: styles the Arabic (right-to-left) page. Used instead of Tailwind's rtl: variant,
+    // which is built on :where() and is dropped whole by the older phones in the browserslist.
+    plugin(({ addVariant }) => addVariant('ar', '[dir="rtl"] &')),
+  ],
 }

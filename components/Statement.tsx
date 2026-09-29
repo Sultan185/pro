@@ -4,9 +4,12 @@ import { useRef } from 'react'
 import { useMotion } from '@/lib/useMotion'
 import { gsap, SplitText, MOTION } from '@/lib/gsap'
 import { stats } from '@/lib/data'
+import { useLocale } from '@/lib/i18n'
+import { ui } from '@/lib/ui'
 
 /** Scroll-scrubbed manifesto: words light up as you read, then the numbers count in. */
 export default function Statement() {
+  const { rtl, t } = useLocale()
   const root = useRef<HTMLElement>(null)
   const text = useRef<HTMLParagraphElement>(null)
 
@@ -48,7 +51,7 @@ export default function Statement() {
           scrollTrigger: { trigger: '[data-stats]', start: 'top 85%', once: true },
         })
         gsap.from('[data-rule]', {
-          scaleX: 0, transformOrigin: 'left center', duration: 1.4, ease: 'expo.inOut',
+          scaleX: 0, transformOrigin: rtl ? 'right center' : 'left center', duration: 1.4, ease: 'expo.inOut',
           scrollTrigger: { trigger: '[data-stats]', start: 'top 88%', once: true },
         })
       })
@@ -59,25 +62,28 @@ export default function Statement() {
   return (
     <section ref={root} id="about" className="section pb-16 sm:pb-20">
       <div className="wrap">
-        <p className="eyebrow mb-8">What I do</p>
+        <p className="eyebrow mb-8">{t(ui.statement.eyebrow)}</p>
         <p ref={text} className="max-w-5xl font-display text-[clamp(1.6rem,3.6vw,3.1rem)] font-medium leading-[1.18] tracking-tight">
-          I take products from a blank repo to thousands of paying merchants. Multi-tenant Laravel backends, React and
-          Inertia frontends, webhook pipelines that never double-fire, and payment flows that reconcile to the cent,
-          built for the Saudi and Gulf market.
+          {t(ui.statement.body)}
         </p>
 
         <div data-stats className="relative mt-20">
           <div data-rule className="h-px w-full bg-line-strong" />
           <dl className="grid grid-cols-2 md:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} data-stat className="min-w-0 border-b border-line px-1 py-8 md:border-b-0 md:border-r md:px-8 md:last:border-r-0 md:first:pl-0">
-                <dd className="mb-2 font-display text-[clamp(2.1rem,11vw,3rem)] font-semibold tracking-tight sm:text-6xl">
-                  <span data-count={s.value}>{s.value.toLocaleString('en-US')}</span>
-                  <span className="text-primary">{s.suffix}</span>
-                </dd>
-                <dt className="text-sm text-muted">{s.label}</dt>
-              </div>
-            ))}
+            {stats.map((s) => {
+              const suffix = <span className="text-primary">{s.suffix}</span>
+              return (
+                <div key={s.label.en} data-stat className="min-w-0 border-b border-line px-1 py-8 md:border-b-0 md:border-r md:px-8 md:last:border-r-0 md:first:pl-0 ar:md:border-l ar:md:border-r-0 ar:md:last:border-l-0 ar:md:first:pl-8 ar:md:first:pr-0">
+                  {/* Arabic puts the sign after the number in reading order, so on its left: +1,000 and %35. */}
+                  <dd dir="ltr" className="mb-2 font-display text-[clamp(2.1rem,11vw,3rem)] font-semibold tracking-tight sm:text-6xl ar:text-right">
+                    {rtl && suffix}
+                    <span data-count={s.value}>{s.value.toLocaleString('en-US')}</span>
+                    {!rtl && suffix}
+                  </dd>
+                  <dt className="text-sm text-muted">{t(s.label)}</dt>
+                </div>
+              )
+            })}
           </dl>
         </div>
       </div>

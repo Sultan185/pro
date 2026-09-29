@@ -79,7 +79,7 @@
 }
 
 /* Initial hidden states so nothing flashes before GSAP takes over.
-   Gated on html.js (set by an inline script in layout.tsx) so content is
+   Gated on html.js (set by an inline script in Document.tsx) so content is
    never stuck invisible if JavaScript fails, and skipped for reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   html.js [data-reveal] { opacity: 0; transform: translateY(28px); }
@@ -91,7 +91,7 @@
   .noise::after { content: ''; }
 }
 
-/* Fail open: set when motion code throws or never starts (see lib/safe.ts, layout.tsx). */
+/* Fail open: set when motion code throws or never starts (see lib/safe.ts, Document.tsx). */
 html.no-motion [data-reveal],
 html.no-motion [data-hero-fade],
 html.no-motion [data-panel],
@@ -106,6 +106,20 @@ html.no-motion header {
   visibility: visible !important;
   clip-path: none !important;
 }
+
+/* ---- Arabic page (html lang="ar" dir="rtl"). Layout mirroring is done with ar: utilities. */
+/* Letter-spacing pulls joined Arabic letters apart. */
+html[lang="ar"] *,
+html[lang="ar"] *::before,
+html[lang="ar"] *::after { letter-spacing: 0; }
+/* Arabic is taller than Latin display type: tight leading clips dots and tails in masked lines. */
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3 { line-height: 1.3; }
+html[lang="ar"] [data-giant] { line-height: 1.25; }
+/* Arabic is hard to read at the 11px used for Latin labels. */
+html[lang="ar"] .eyebrow { font-size: 13px; }
+[dir="rtl"] .nav-link::after { transform-origin: right; }
 
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }

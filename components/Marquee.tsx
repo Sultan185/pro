@@ -45,7 +45,8 @@ export default function Marquee() {
 
   const items = [...marquee, ...marquee]
   return (
-    <div ref={root} className="relative space-y-3 overflow-hidden border-y border-line py-6 [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
+    // Latin names on a track that always travels the same way, so it stays left-to-right in Arabic.
+    <div ref={root} dir="ltr" className="relative space-y-3 overflow-hidden border-y border-line py-6 [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
       {[0, 1].map((r) => (
         <div key={r} data-row className="flex w-max gap-10 whitespace-nowrap will-change-transform">
           {(r ? [...items].reverse() : items).map((t, i) => (

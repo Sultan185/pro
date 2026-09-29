@@ -6,10 +6,14 @@ import { useMotion } from '@/lib/useMotion'
 import { ArrowUpRight, MoveRight } from 'lucide-react'
 import { gsap, ScrollTrigger, SplitText, DESKTOP, MOBILE, FINE } from '@/lib/gsap'
 import { projects, type Project } from '@/lib/data'
+import { useLocale } from '@/lib/i18n'
+import { ui } from '@/lib/ui'
+import Accent from './Accent'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
 function Panel({ p, i }: { p: Project; i: number }) {
+  const { rtl, t } = useLocale()
   return (
     <article
       data-panel
@@ -20,13 +24,13 @@ function Panel({ p, i }: { p: Project; i: number }) {
         href={p.url}
         target="_blank"
         rel="noopener noreferrer"
-        data-cursor="open"
+        data-cursor={t(ui.projects.open)}
         className="relative block aspect-[16/10] overflow-hidden rounded-3xl border border-line bg-surface lg:aspect-auto lg:min-h-0 lg:flex-1"
       >
         <div data-img-wrap className="absolute inset-y-0 -inset-x-[8%] will-change-transform">
           <Image
             src={p.image}
-            alt={`${p.name} screenshot`}
+            alt={`${p.name} ${t(ui.projects.screenshot)}`}
             fill
             sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover object-top transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
@@ -46,10 +50,10 @@ function Panel({ p, i }: { p: Project; i: number }) {
         </span>
       </a>
 
-      <div data-panel-body className="pt-5">
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: 'var(--accent)' }}>{p.kicker}</p>
+      <div data-panel-body dir={rtl ? 'rtl' : undefined} className="pt-5">
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] ar:text-[13px]" style={{ color: 'var(--accent)' }}>{t(p.kicker)}</p>
         <h3 data-panel-title className="mt-1 font-display text-3xl font-semibold tracking-tight xl:text-4xl">{p.name}</h3>
-        <p className="mt-2 line-clamp-3 max-w-xl text-sm leading-relaxed text-muted">{p.description}</p>
+        <p className="mt-2 line-clamp-3 max-w-xl text-sm leading-relaxed text-muted">{t(p.description)}</p>
         <div className="mt-3 flex flex-wrap gap-1.5">
           {p.tags.map((t) => (
             <span key={t} className="rounded-full border border-line bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] text-muted">{t}</span>
@@ -61,6 +65,7 @@ function Panel({ p, i }: { p: Project; i: number }) {
 }
 
 export default function Projects() {
+  const { rtl, t } = useLocale()
   const root = useRef<HTMLElement>(null)
   const pin = useRef<HTMLDivElement>(null)
   const track = useRef<HTMLDivElement>(null)
@@ -178,34 +183,36 @@ export default function Projects() {
       <div ref={pin} className="flex flex-col overflow-hidden py-20 lg:h-screen lg:min-h-[680px] lg:py-0 lg:pb-8 lg:pt-24">
         <div className="wrap flex shrink-0 items-end justify-between gap-8 pb-8">
           <div>
-            <p className="eyebrow mb-4">Selected work</p>
+            <p className="eyebrow mb-4">{t(ui.projects.eyebrow)}</p>
             <h2 ref={title} className="font-display text-[clamp(1.9rem,4vw,3.25rem)] font-semibold leading-[1.02] tracking-tightest">
-              Products in production, <span className="text-primary">not demos.</span>
+              <Accent parts={t(ui.projects.title)} />
             </h2>
           </div>
           <div className="hidden shrink-0 items-center gap-5 lg:flex">
             <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-dim">
-              Scroll <MoveRight size={14} />
+              {t(ui.projects.scroll)} <MoveRight size={14} />
             </span>
-            <span className="font-display text-3xl font-semibold tabular-nums">
+            <span dir="ltr" className="font-display text-3xl font-semibold tabular-nums">
               <span ref={count}>01</span>
               <span className="text-dim"> / {pad(projects.length)}</span>
             </span>
           </div>
         </div>
 
-        <div ref={track} className="flex min-h-0 flex-1 flex-col gap-14 px-5 sm:px-8 lg:flex-row lg:gap-8 lg:px-[max(2rem,calc((100vw-76rem)/2+2rem))] lg:will-change-transform">
+        {/* The track travels the same way in both languages, so it is always laid out left-to-right;
+            only the copy inside each panel follows the page direction. */}
+        <div ref={track} dir="ltr" className="flex min-h-0 flex-1 flex-col gap-14 px-5 sm:px-8 lg:flex-row lg:gap-8 lg:px-[max(2rem,calc((100vw-76rem)/2+2rem))] lg:will-change-transform">
           {projects.map((p, i) => (
             <Panel key={p.slug} p={p} i={i} />
           ))}
           <div className="hidden shrink-0 items-center lg:flex lg:w-[28vw]">
-            <a href="#contact" data-magnetic className="group flex flex-col gap-4">
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-dim">Next</span>
-              <span className="font-display text-5xl font-semibold leading-none tracking-tightest">
-                Yours could be <span className="text-primary">number {pad(projects.length + 1)}.</span>
+            <a href="#contact" data-magnetic dir={rtl ? 'rtl' : undefined} className="group flex flex-col gap-4">
+              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-dim ar:text-[13px]">{t(ui.projects.next)}</span>
+              <span className="font-display text-5xl font-semibold leading-none tracking-tightest ar:leading-[1.3]">
+                {t(ui.projects.yours)[0]}<span className="text-primary">{t(ui.projects.yours)[1]}{pad(projects.length + 1)}.</span>
               </span>
               <span className="grid h-14 w-14 place-items-center rounded-full border border-line-strong transition-all duration-500 group-hover:bg-primary group-hover:text-black">
-                <ArrowUpRight size={22} />
+                <ArrowUpRight size={22} className="ar:-scale-x-100" />
               </span>
             </a>
           </div>
